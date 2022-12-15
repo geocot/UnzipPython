@@ -1,33 +1,22 @@
 #Martin Couture
 #Décembre 2020
-#Il suffit d'indiquer le répertoire et les fichiers ZIP sont extraient dans un répertoire ayant le même nom.
+#Il suffit d'indiquer le répertoire dans "chemin d'accès". 
+#Les fichier sont dézippés dans avec le même nom du fichier zip comme nom de répertoire. 
 #Fait avec Python 3.X
 
-import os, zipfile
+import os
+from zipfile import ZipFile
 
-#Liste des fichiers ZIP
-repertoire = input("Entrer le chemin du répertoire: ")
-chemin = repertoire.replace("\\", "/") + "/"
-dicoZip = {}
+chemin = r"chemin d'accès"
+os.chdir(chemin)
+dir_list = os.listdir(chemin)
 
-listeFichiers = os.listdir(chemin)
-for fichier in listeFichiers:
-    if os.path.isfile(chemin + fichier):
-        nomFichier, nomExtension = os.path.splitext(fichier)
-        if nomExtension == ".zip":
-            dicoZip[nomFichier] = fichier
+for elem in dir_list:
+    if elem[len(elem)-4:] == ".zip":
+        with ZipFile(elem, 'r') as zip:
+            zip.extractall(elem[:len(elem)-4])
+            print("Dézippé : ",elem[:len(elem)-4])
 
-cles = dicoZip.keys()
-
-for cle in cles:
-    print("Création du répertoire ->", cle)
-    if not os.path.exists(chemin + cle):
-       os.mkdir(chemin + cle )
-    else:
-        print("Répertoire déjà existant...")
-    with zipfile.ZipFile(chemin + dicoZip[cle], 'r') as zipObj:
-        print("Extraction des fichiers...")
-        zipObj.extractall(chemin  + cle )
 
 
 
