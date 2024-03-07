@@ -1,6 +1,6 @@
 import os, py7zr, zipfile
 
-repertoire = r"C:\Users\Martin\Documents\Perso\Architecture de réseaux 1\H24\TP1Correction\Gr4"
+repertoire = r"Votre répertoire"
 os.chdir(repertoire)
 
 
